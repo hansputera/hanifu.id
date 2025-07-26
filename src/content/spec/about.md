@@ -1,9 +1,6 @@
 # About
-This is the demo site for [Fuwari](https://github.com/saicaca/fuwari).
 
-::github{repo="saicaca/fuwari"}
+Hola 👋 Lemme introduce myself, I'm **Hanif Dwy Putra S**, usually called **Hanif**. I'm 17 years old, live in Palu, Central of Sulawesi (Sulawesi Tengah), Indonesia.
 
-> ### Sources of images used in this site
-> - [Unsplash](https://unsplash.com/)
-> - [星と少女](https://www.pixiv.net/artworks/108916539) by [Stella](https://www.pixiv.net/users/93273965)
-> - [Rabbit - v1.4 Showcase](https://civitai.com/posts/586908) by [Rabbit_YourMajesty](https://civitai.com/user/Rabbit_YourMajesty)
+If you want reach me more, feel free to [connect](https://linkedin.com/in/hansputera) with me and [follow](https://instagram.com/hanif.dwy.sembiring20) each other.
+![ryoooku](https://media1.tenor.com/m/Bx3uEJf4Q2UAAAAC/ryou-yamada-ryo-yamada.gif)
