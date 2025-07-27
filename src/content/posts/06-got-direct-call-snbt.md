@@ -12,7 +12,7 @@ Halo guys, bagi yang belum kenal saya, kenalin nama saya **Hanif**, panggil aja 
 Aku programmer pemula yang baru belajar programming kurang lebih 3 tahun lamanya. Dan, memiliki pengalaman bekerja di real projects kurang lebih 1 tahun.
 
 ## SNBT Dumper
-Bagi teman-teman yang belum mengetahui SNBT Dumper atau project dumping data UTBK/SNBT saat lalu yang dibuat oleh teman saya dan saya pribadi untuk kebutuhan statistik lulusan sekolah. Project ini tentunya sangat bermanfaat bagi sekolah dalam melakukan tracking alumni/lulusan melalui jalur SNBT.
+Bagi teman-teman yang belum mengetahui SNBT Dumper. SNBT Dumper adalah project dumping data UTBK/SNBT saat lalu yang dibuat oleh teman saya dan saya pribadi untuk kebutuhan statistik lulusan sekolah. Project ini tentunya sangat bermanfaat bagi sekolah dalam melakukan tracking alumni/lulusan melalui jalur SNBT.
 
 ::github{repo="hansputera/snbt-historic"}
 
