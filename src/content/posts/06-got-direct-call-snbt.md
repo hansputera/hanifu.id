@@ -1,7 +1,7 @@
 ---
 title: Jalur Polisi atau Takedown?
 description: Selang 2-3 bulan ramainya project SNBT Dumper yang saya dan teman saya. Hal tersebut mendapatkan notice dari Kemdikbudristek untuk meminta saya untuk melakukan takedown atau melalui jalur kepolisian.
-draft: false
+draft: true
 published: 2025-07-26
 category: General
 tags: [daily, technology, dumping, scraping, web, journal]
