@@ -57,12 +57,12 @@ export async function getTagList(): Promise<Tag[]> {
 	});
 
 	const countMap: { [key: string]: number } = {};
-	allBlogPosts.map((post: { data: { tags: string[] } }) => {
-		post.data.tags.map((tag: string) => {
+	for (const post of allBlogPosts) {
+		for (const tag of post.data.tags) {
 			if (!countMap[tag]) countMap[tag] = 0;
 			countMap[tag]++;
-		});
-	});
+		}
+	}
 
 	// sort tags
 	const keys: string[] = Object.keys(countMap).sort((a, b) => {
@@ -83,11 +83,11 @@ export async function getCategoryList(): Promise<Category[]> {
 		return import.meta.env.PROD ? data.draft !== true : true;
 	});
 	const count: { [key: string]: number } = {};
-	allBlogPosts.map((post: { data: { category: string | null } }) => {
+	for (const post of allBlogPosts) {
 		if (!post.data.category) {
 			const ucKey = i18n(I18nKey.uncategorized);
 			count[ucKey] = count[ucKey] ? count[ucKey] + 1 : 1;
-			return;
+			continue;
 		}
 
 		const categoryName =
@@ -96,7 +96,7 @@ export async function getCategoryList(): Promise<Category[]> {
 				: String(post.data.category).trim();
 
 		count[categoryName] = count[categoryName] ? count[categoryName] + 1 : 1;
-	});
+	}
 
 	const lst = Object.keys(count).sort((a, b) => {
 		return a.toLowerCase().localeCompare(b.toLowerCase());

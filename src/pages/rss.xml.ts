@@ -15,23 +15,28 @@ function stripInvalidXmlChars(str: string): string {
 	);
 }
 
+function stripDirectiveSyntax(str: string): string {
+	return str.replace(/::\w+\{[^}]*\}/g, "");
+}
+
 export async function GET(context: APIContext) {
 	const blog = await getSortedPosts();
 
 	return rss({
 		title: siteConfig.title,
 		description: siteConfig.subtitle || "No description",
-		site: context.site ?? "https://fuwari.vercel.app",
+		site: context.site ?? "https://hanifu.id",
 		items: blog.map((post) => {
 			const content =
 				typeof post.body === "string" ? post.body : String(post.body || "");
 			const cleanedContent = stripInvalidXmlChars(content);
+			const cleanedDirectives = stripDirectiveSyntax(cleanedContent);
 			return {
 				title: post.data.title,
 				pubDate: post.data.published,
 				description: post.data.description || "",
 				link: `/posts/${post.slug}/`,
-				content: sanitizeHtml(parser.render(cleanedContent), {
+				content: sanitizeHtml(parser.render(cleanedDirectives), {
 					allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
 				}),
 			};
