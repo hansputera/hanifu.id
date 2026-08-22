@@ -1,16 +1,13 @@
 ---
-import type { CollectionEntry } from "astro:content";
-import path from "node:path";
 import { Icon } from "astro-icon/components";
 import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
-import { getDir } from "../utils/url-utils";
 import ImageWrapper from "./misc/ImageWrapper.astro";
 import PostMetadata from "./PostMeta.astro";
 
 interface Props {
 	class?: string;
-	entry: CollectionEntry<"posts">;
+	slug: string;
 	title: string;
 	url: string;
 	published: Date;
@@ -21,9 +18,12 @@ interface Props {
 	description: string;
 	draft: boolean;
 	style: string;
+	words: number;
+	minutes: number;
+	excerpt: string;
 }
 const {
-	entry,
+	slug,
 	title,
 	url,
 	published,
@@ -33,14 +33,15 @@ const {
 	image,
 	description,
 	style,
+	words,
+	minutes,
+	excerpt: remarkExcerpt,
 } = Astro.props;
 const className = Astro.props.class;
 
 const hasCover = image !== undefined && image !== null && image !== "";
 
 const coverWidth = "28%";
-
-const { remarkPluginFrontmatter } = await entry.render();
 ---
 <div class:list={["card-base flex flex-col-reverse md:flex-col w-full rounded-[var(--radius-large)] overflow-hidden relative", className]} style={style}>
     <div class:list={["pl-6 md:pl-9 pr-6 md:pr-2 pt-6 md:pt-7 pb-6 relative", {"w-full md:w-[calc(100%_-_52px_-_12px)]": !hasCover, "w-full md:w-[calc(100%_-_var(--coverWidth)_-_12px)]": hasCover}]}>
@@ -61,17 +62,17 @@ const { remarkPluginFrontmatter } = await entry.render();
 
         <!-- description -->
         <div class:list={["transition text-75 mb-3.5 pr-4", {"line-clamp-2 md:line-clamp-1": !description}]}>
-            { description || remarkPluginFrontmatter.excerpt }
+            { description || remarkExcerpt }
         </div>
 
         <!-- word count and read time  -->
         <div class="text-sm text-black/30 dark:text-white/30 flex gap-4 transition">
             <div>
-                {remarkPluginFrontmatter.words} {" " + i18n(remarkPluginFrontmatter.words === 1 ? I18nKey.wordCount : I18nKey.wordsCount)}
+                {words} {" " + i18n(words === 1 ? I18nKey.wordCount : I18nKey.wordsCount)}
             </div>
             <div>|</div>
             <div>
-                {remarkPluginFrontmatter.minutes} {" " + i18n(remarkPluginFrontmatter.minutes === 1 ? I18nKey.minuteCount : I18nKey.minutesCount)}
+                {minutes} {" " + i18n(minutes === 1 ? I18nKey.minuteCount : I18nKey.minutesCount)}
             </div>
         </div>
 
@@ -88,7 +89,7 @@ const { remarkPluginFrontmatter } = await entry.render();
                   class="transition opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 text-white text-5xl">
             </Icon>
         </div>
-        <ImageWrapper src={image} basePath={path.join("content/posts/", getDir(entry.id))} alt="Cover Image of the Post"
+        <ImageWrapper src={image} basePath={"content/posts/"} alt="Cover Image of the Post"
                   class="w-full h-full">
         </ImageWrapper>
     </a>}
