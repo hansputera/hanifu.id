@@ -5,7 +5,8 @@ function getEnv(key: string, fallback = ""): string {
 
 const CMS_API_URL = (() => {
 	const raw = getEnv("CMS_API_URL", "https://cms.hanifu.id");
-	return raw.startsWith("http") ? raw : `https://${raw}`;
+	if (raw.startsWith("https://") || raw.startsWith("http://")) return raw;
+	return `https://${raw}`;
 })();
 const CMS_ACCESS_CLIENT_ID = getEnv("CMS_ACCESS_CLIENT_ID");
 const CMS_ACCESS_CLIENT_SECRET = getEnv("CMS_ACCESS_CLIENT_SECRET");
