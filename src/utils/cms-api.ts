@@ -1,6 +1,14 @@
-const CMS_API_URL = import.meta.env.CMS_API_URL || "https://cms.hanifu.id";
-const CMS_ACCESS_CLIENT_ID = import.meta.env.CMS_ACCESS_CLIENT_ID || "";
-const CMS_ACCESS_CLIENT_SECRET = import.meta.env.CMS_ACCESS_CLIENT_SECRET || "";
+function getEnv(key: string, fallback = ""): string {
+	const val = import.meta.env[key] || fallback;
+	return val;
+}
+
+const CMS_API_URL = (() => {
+	const raw = getEnv("CMS_API_URL", "https://cms.hanifu.id");
+	return raw.startsWith("http") ? raw : `https://${raw}`;
+})();
+const CMS_ACCESS_CLIENT_ID = getEnv("CMS_ACCESS_CLIENT_ID");
+const CMS_ACCESS_CLIENT_SECRET = getEnv("CMS_ACCESS_CLIENT_SECRET");
 
 function isConfigured(): boolean {
 	return !!(CMS_ACCESS_CLIENT_ID && CMS_ACCESS_CLIENT_SECRET);
@@ -80,15 +88,21 @@ async function cmsFetch<T>(path: string): Promise<T> {
 	}
 
 	const url = `${CMS_API_URL}${path}`;
-	const res = await fetch(url, { headers: getHeaders() });
-
-	const text = await res.text();
 	try {
-		return JSON.parse(text) as T;
-	} catch {
-		throw new Error(
-			`CMS API returned non-JSON for ${url}: ${text.substring(0, 200)}`,
-		);
+		const res = await fetch(url, {
+			headers: getHeaders(),
+			signal: AbortSignal.timeout(15000),
+		});
+		const text = await res.text();
+		try {
+			return JSON.parse(text) as T;
+		} catch {
+			console.warn(`[cms-api] Non-JSON response from ${url}: ${text.substring(0, 200)}`);
+			return { entries: [], data: [], total: 0, page: 1, limit: 20 } as T;
+		}
+	} catch (err) {
+		console.warn(`[cms-api] Fetch failed for ${url}: ${err instanceof Error ? err.message : err}`);
+		return { entries: [], data: [], total: 0, page: 1, limit: 20 } as T;
 	}
 }
 
@@ -121,7 +135,7 @@ export async function fetchAllPosts(): Promise<CmsPostListItem[]> {
 	while (true) {
 		const res = await fetchPosts({ page, limit });
 		allPosts.push(...res.entries);
-		if (allPosts.length >= res.total) break;
+		if (allPosts.length >= res.total || res.entries.length === 0) break;
 		page++;
 	}
 
