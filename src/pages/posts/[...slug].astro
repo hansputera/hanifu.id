@@ -47,21 +47,21 @@ function slugify(text: string): string {
 		.replace(/\s+/g, "-");
 }
 
-export async function getStaticPaths() {
-	const posts = await getSortedPosts();
-	return posts.map((post) => ({
-		params: { slug: post.slug },
-		props: {
-			post,
-			nextSlug: post.nextSlug || null,
-			nextTitle: post.nextTitle || null,
-			prevSlug: post.prevSlug || null,
-			prevTitle: post.prevTitle || null,
-		},
-	}));
+export const prerender = false;
+
+const slug = Astro.params.slug as string;
+const posts = await getSortedPosts();
+const postIndex = posts.findIndex((p) => p.slug === slug);
+
+if (postIndex === -1) {
+	return Astro.redirect("/404/");
 }
 
-const { post, nextSlug, nextTitle, prevSlug, prevTitle } = Astro.props;
+const post = posts[postIndex];
+const nextSlug = post.nextSlug || null;
+const nextTitle = post.nextTitle || null;
+const prevSlug = post.prevSlug || null;
+const prevTitle = post.prevTitle || null;
 
 const detail = await fetchPostBySlug(post.slug);
 const markdownBody = detail.data?.markdown_body || "";

@@ -5,6 +5,8 @@ import { i18n } from "@i18n/translation";
 import MainGridLayout from "@layouts/MainGridLayout.astro";
 import { getSortedPostsList } from "../utils/content-utils";
 
+export const prerender = false;
+
 const sortedPostsList = await getSortedPostsList();
 ---
 

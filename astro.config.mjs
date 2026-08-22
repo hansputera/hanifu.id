@@ -1,6 +1,7 @@
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import tailwind from "@astrojs/tailwind";
+import vercel from "@astrojs/vercel";
 import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import swup from "@swup/astro";
@@ -103,6 +104,7 @@ export default defineConfig({
 		svelte(),
 		sitemap(),
 	],
+	adapter: vercel(),
 	markdown: {
 		remarkPlugins: [
 			remarkMath,
