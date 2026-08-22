@@ -98,11 +98,15 @@ async function cmsFetch<T>(path: string): Promise<T> {
 		try {
 			return JSON.parse(text) as T;
 		} catch {
-			console.warn(`[cms-api] Non-JSON response from ${url}: ${text.substring(0, 200)}`);
+			console.warn(
+				`[cms-api] Non-JSON response from ${url}: ${text.substring(0, 200)}`,
+			);
 			return { entries: [], data: [], total: 0, page: 1, limit: 20 } as T;
 		}
 	} catch (err) {
-		console.warn(`[cms-api] Fetch failed for ${url}: ${err instanceof Error ? err.message : err}`);
+		console.warn(
+			`[cms-api] Fetch failed for ${url}: ${err instanceof Error ? err.message : err}`,
+		);
 		return { entries: [], data: [], total: 0, page: 1, limit: 20 } as T;
 	}
 }

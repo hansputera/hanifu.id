@@ -27,8 +27,14 @@ const page = {
 	end: Math.min(end, total),
 	size: PAGE_SIZE,
 	url: {
-		prev: safePage > 1 ? url(`/${safePage - 1 === 1 ? "" : `${safePage - 1}/`}`) : undefined,
+		current: url(safePage === 1 ? "/" : `/${safePage}/`),
+		prev:
+			safePage > 1
+				? url(`/${safePage - 1 === 1 ? "" : `${safePage - 1}/`}`)
+				: undefined,
 		next: safePage < totalPages ? url(`/${safePage + 1}/`) : undefined,
+		first: url("/"),
+		last: url(`/${totalPages}/`),
 	},
 };
 
