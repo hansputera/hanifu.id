@@ -23,6 +23,9 @@ const page = {
 	currentPage: safePage,
 	lastPage: totalPages,
 	total,
+	start: start,
+	end: Math.min(end, total),
+	size: PAGE_SIZE,
 	url: {
 		prev: safePage > 1 ? url(`/${safePage - 1 === 1 ? "" : `${safePage - 1}/`}`) : undefined,
 		next: safePage < totalPages ? url(`/${safePage + 1}/`) : undefined,

@@ -40,13 +40,6 @@ function extractHeadings(markdown: string): MarkdownHeading[] {
 	return headings;
 }
 
-function slugify(text: string): string {
-	return text
-		.toLowerCase()
-		.replace(/[^\w\s-]/g, "")
-		.replace(/\s+/g, "-");
-}
-
 export const prerender = false;
 
 const slug = Astro.params.slug as string;
@@ -170,7 +163,7 @@ const jsonLd = {
             </div>}
         </a>
     </div>
-<script src="https://giscus.app/client.js"
+<script is:inline src="https://giscus.app/client.js"
         data-repo="hansputera/hanifu.id"
         data-repo-id="R_kgDOPS8DeA"
         data-category="General"
